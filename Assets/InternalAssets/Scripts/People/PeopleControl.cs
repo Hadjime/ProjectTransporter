@@ -4,77 +4,66 @@ using DG.Tweening;
 using InternalAssets.Scripts.People.States;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 namespace InternalAssets.Scripts.People
 {
     public class PeopleControl : MonoBehaviour
     {
+        public Vector3 HomePoint => homePoint;
+        public float Duration => duration;
+        public float WaitTime => waitTime;
+        public PeopleStateMachine PeopleFSM;
+        
+        [SerializeField] private Vector3 homePoint;
         [SerializeField] private Vector3 targetPoint;
         [SerializeField] private float duration;
+        [Range(0f, 10f)]
+        [SerializeField] private float waitTime;
+        [SerializeField] private Image fillingImage;
 
-        private PeopleStateMachine _peopleFSM;
-        private Dictionary<Type, IPeopleBehavior> _behaviorsMap;
-        private IPeopleBehavior _currentBehavior;
+        private Dictionary<Type, IPeopleState> _statesMap;
+
+        private void Awake()
+        {
+            PeopleFSM = new PeopleStateMachine();
+        }
 
         void Start()
         {
-            InitBehaviors();
-            SetBehaviorMovIn();
-            _peopleFSM.Initialize(_behaviorsMap[typeof(PeopleMoveInState)]);
+            InitStates();
+            PeopleFSM.Initialize(_statesMap[typeof(PeopleMoveInState)]);
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if (_currentBehavior != null)
-            {
-                _currentBehavior.Update();
-            }
-            _peopleFSM.CurrentBehavior.Update();
+            PeopleFSM.CurrentState.Update();
         }
 
         public Vector3 GetRandomTargetPoint()
         {
             return new Vector3(Random.Range(-1.5f, 2f), targetPoint.y, targetPoint.z);
         }
+
+        public void MoveOut()
+        {
+            transform.DOMove(homePoint, duration, false);
+        }
+
+        private void InitStates()
+        {
+            _statesMap = new Dictionary<Type, IPeopleState>();
+            _statesMap[typeof(PeopleMoveInState)] = new PeopleMoveInState(this);
+            _statesMap[typeof(PeopleMoveOutState)] = new PeopleMoveOutState(this);
+            _statesMap[typeof(PeopleWaitState)] = new PeopleWaitState(this);
+        }
+   
         
-        public void Move(Vector3 point)
-        {
-            transform.DOMove(point, duration, false);
-        }
-
-        private void InitBehaviors()
-        {
-            _behaviorsMap = new Dictionary<Type, IPeopleBehavior>();
-
-            _behaviorsMap[typeof(PeopleMoveInState)] = new PeopleMoveInState(this);
-        }
-
-        private void SetBehaviors(IPeopleBehavior newBehaviors)
-        {
-            if (_currentBehavior != null)
-                _currentBehavior.Exit();
-
-            _currentBehavior = newBehaviors;
-            _currentBehavior.Enter();
-        }
-
-        private void SetBehaviorByDefault()
-        {
-            var behaviorByDefault = GetBehavior<PeopleMoveInState>();
-            SetBehaviors(behaviorByDefault);
-        }        
-        
-        private IPeopleBehavior GetBehavior<T>() where T : IPeopleBehavior
+        public IPeopleState GetState<T>() where T : IPeopleState
         {
             var type = typeof(T);
-            return _behaviorsMap[type];
+            return _statesMap[type];
         }
-        
-        private void SetBehaviorMovIn()
-        {
-            var behaviorByDefault = GetBehavior<PeopleMoveInState>();
-            SetBehaviors(behaviorByDefault);
-        }   
+ 
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace InternalAssets.Scripts.People
+﻿namespace InternalAssets.Scripts.People.States
 {
-    public interface IPeopleBehavior
+    public interface IPeopleState
     {
         void Enter();
         void Update();

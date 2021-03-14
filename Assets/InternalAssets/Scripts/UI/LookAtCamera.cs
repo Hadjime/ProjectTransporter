@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace InternalAssets.Scripts.UI
 {
@@ -10,7 +11,7 @@ namespace InternalAssets.Scripts.UI
         void Start()
         {
             _camera = GetComponent<Canvas>().worldCamera;
-            transform.rotation = _camera.transform.rotation;
+            transform.LookAt(transform.position + _camera.transform.forward);
         }
     }
 }

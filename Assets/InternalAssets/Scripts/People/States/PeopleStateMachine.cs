@@ -4,19 +4,19 @@ namespace InternalAssets.Scripts.People.States
 {
     public class PeopleStateMachine
     {
-        public IPeopleBehavior CurrentBehavior { get; private set; }
+        public IPeopleState CurrentState { get; private set; }
 
-        public void Initialize(IPeopleBehavior startingBehavior)
+        public void Initialize(IPeopleState startingState)
         {
-            CurrentBehavior = startingBehavior;
-            CurrentBehavior.Enter();
+            CurrentState = startingState;
+            CurrentState.Enter();
         }
 
-        public void ChangeBehavior(IPeopleBehavior newBehavior)
+        public void ChangeState(IPeopleState newState)
         {
-            CurrentBehavior.Exit();
-            CurrentBehavior = newBehavior;
-            CurrentBehavior.Enter();
+            CurrentState.Exit();
+            CurrentState = newState;
+            CurrentState.Enter();
         }
     }
 }

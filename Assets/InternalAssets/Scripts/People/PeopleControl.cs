@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using InternalAssets.Scripts.People.States;
+using InternalAssets.Scripts.UI.Bar;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
@@ -14,13 +15,13 @@ namespace InternalAssets.Scripts.People
         public float Duration => duration;
         public float WaitTime => waitTime;
         public PeopleStateMachine PeopleFSM;
-        
+
         [SerializeField] private Vector3 homePoint;
         [SerializeField] private Vector3 targetPoint;
         [SerializeField] private float duration;
         [Range(0f, 10f)]
         [SerializeField] private float waitTime;
-        [SerializeField] private Image fillingImage;
+        
 
         private Dictionary<Type, IPeopleState> _statesMap;
 

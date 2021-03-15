@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using InternalAssets.Scripts.UI.Bar;
+using UnityEngine;
 
 namespace InternalAssets.Scripts.People.States
 {
     public class PeopleWaitState : IPeopleState
     {
+        public static event Action<float> OnChangedWaitTimeEvent;
+        public static event Action OnResetWaitTimeEvent;
+        
         private PeopleControl _peopleControl;
-        private float _timer;
         private float _leftTime;
 
         public PeopleWaitState(PeopleControl peopleControl)
@@ -21,11 +25,14 @@ namespace InternalAssets.Scripts.People.States
         public void Update()
         {
             _leftTime -= Time.deltaTime;
-            //уменьшение прогресбара доделать
             
+            var normalizedTime = _leftTime / _peopleControl.WaitTime;
+            OnChangedWaitTimeEvent?.Invoke(normalizedTime);
             if (_leftTime < 0)
+            {
                 SetStateMoveOut();
-            
+                OnResetWaitTimeEvent?.Invoke();
+            }
         }
 
         public void Exit()

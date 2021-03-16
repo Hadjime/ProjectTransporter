@@ -6,9 +6,6 @@ namespace InternalAssets.Scripts.People.States
 {
     public class PeopleWaitState : IPeopleState
     {
-        public static event Action<float> OnChangedWaitTimeEvent;
-        public static event Action OnResetWaitTimeEvent;
-        
         private PeopleControl _peopleControl;
         private float _leftTime;
 
@@ -27,11 +24,12 @@ namespace InternalAssets.Scripts.People.States
             _leftTime -= Time.deltaTime;
             
             var normalizedTime = _leftTime / _peopleControl.WaitTime;
-            OnChangedWaitTimeEvent?.Invoke(normalizedTime);
+            _peopleControl.OnChangedWaitTime(normalizedTime);
+            
             if (_leftTime < 0)
             {
                 SetStateMoveOut();
-                OnResetWaitTimeEvent?.Invoke();
+                _peopleControl.OnResetWaitTime();
             }
         }
 

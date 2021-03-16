@@ -19,14 +19,20 @@ namespace InternalAssets.Scripts.UI.Bar
         
         private void OnEnable()
         {
-            _peopleControl.OnChangedWaitTimeEvent += SetTimeNormalized;
-            _peopleControl.OnResetWaitTimeEvent += ResetTime;
+            if (_peopleControl != null)
+            {
+                _peopleControl.OnChangedWaitTimeEvent += SetTimeNormalized;
+                _peopleControl.OnResetWaitTimeEvent += ResetTime;
+            }
         }
 
         private void OnDisable()
         {
-            _peopleControl.OnChangedWaitTimeEvent += SetTimeNormalized;
-            _peopleControl.OnResetWaitTimeEvent += ResetTime;
+            if (_peopleControl != null)
+            {
+                _peopleControl.OnChangedWaitTimeEvent += SetTimeNormalized;
+                _peopleControl.OnResetWaitTimeEvent += ResetTime;
+            }
         }
 
         

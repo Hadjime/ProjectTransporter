@@ -1,4 +1,7 @@
-﻿namespace InternalAssets.Scripts.People.States
+﻿using System;
+using DG.Tweening;
+
+namespace InternalAssets.Scripts.People.States
 {
     public class PeopleMoveOutState : IPeopleState
     {
@@ -8,10 +11,12 @@
         {
             _peopleControl = peopleControl;
         }
-
+        
         public void Enter()
         {
-            _peopleControl.MoveOut();
+            var homePoint = _peopleControl.HomePoint;
+            var duration = _peopleControl.Duration;
+            _peopleControl.transform.DOMove(homePoint, duration, false);
         }
 
         public void Update()
@@ -23,5 +28,6 @@
         {
             
         }
+        
     }
 }

@@ -11,6 +11,8 @@ namespace InternalAssets.Scripts.People
 {
     public class PeopleControl : MonoBehaviour
     {
+        public event Action<float> OnChangedWaitTimeEvent;
+        public event Action OnResetWaitTimeEvent;
         public Vector3 HomePoint => homePoint;
         public float Duration => duration;
         public float WaitTime => waitTime;
@@ -21,7 +23,6 @@ namespace InternalAssets.Scripts.People
         [SerializeField] private float duration;
         [Range(0f, 10f)]
         [SerializeField] private float waitTime;
-        
 
         private Dictionary<Type, IPeopleState> _statesMap;
 
@@ -46,11 +47,6 @@ namespace InternalAssets.Scripts.People
             return new Vector3(Random.Range(-1.5f, 2f), targetPoint.y, targetPoint.z);
         }
 
-        public void MoveOut()
-        {
-            transform.DOMove(homePoint, duration, false);
-        }
-
         private void InitStates()
         {
             _statesMap = new Dictionary<Type, IPeopleState>();
@@ -65,6 +61,15 @@ namespace InternalAssets.Scripts.People
             var type = typeof(T);
             return _statesMap[type];
         }
- 
+
+        public void OnChangedWaitTime(float value)
+        {
+            OnChangedWaitTimeEvent?.Invoke(value);
+        }
+
+        public void OnResetWaitTime()
+        {
+            OnResetWaitTimeEvent?.Invoke();
+        }
     }
 }

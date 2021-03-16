@@ -1,4 +1,5 @@
 ﻿using System;
+using InternalAssets.Scripts.People;
 using InternalAssets.Scripts.People.States;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,15 +10,26 @@ namespace InternalAssets.Scripts.UI.Bar
     {
         [SerializeField] private Image fillingImage;
 
+        private PeopleControl _peopleControl;
+        
+        private void Awake()
+        {
+            _peopleControl = GetComponentInParent<PeopleControl>();
+        }
+        
         private void OnEnable()
         {
-            PeopleWaitState.OnChangedWaitTimeEvent += SetTimeNormalized;
+            _peopleControl.OnChangedWaitTimeEvent += SetTimeNormalized;
+            _peopleControl.OnResetWaitTimeEvent += ResetTime;
         }
 
         private void OnDisable()
         {
-            PeopleWaitState.OnChangedWaitTimeEvent -= SetTimeNormalized;
+            _peopleControl.OnChangedWaitTimeEvent += SetTimeNormalized;
+            _peopleControl.OnResetWaitTimeEvent += ResetTime;
         }
+
+        
 
         public void SetTimeNormalized(float timeNorm)
         {

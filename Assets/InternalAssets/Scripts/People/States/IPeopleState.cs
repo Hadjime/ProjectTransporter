@@ -1,4 +1,6 @@
-﻿namespace InternalAssets.Scripts.People.States
+﻿using System;
+
+namespace InternalAssets.Scripts.People.States
 {
     public interface IPeopleState
     {

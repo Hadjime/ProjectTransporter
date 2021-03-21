@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using InternalAssets.Scripts.People.States;
 using InternalAssets.Scripts.UI.Bar;
+using Lean.Pool;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
@@ -13,6 +14,9 @@ namespace InternalAssets.Scripts.People
     {
         public event Action<float> OnChangedWaitTimeEvent;
         public event Action OnResetWaitTimeEvent;
+
+        public LeanGameObjectPool PoolPeoples { get; set; }
+
         public Vector3 HomePoint => homePoint;
         public float Duration => duration;
         public float WaitTime => waitTime;

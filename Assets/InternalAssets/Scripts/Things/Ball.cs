@@ -2,8 +2,8 @@
 
 namespace InternalAssets.Scripts.Things
 {
-    public class Thing : MonoBehaviour
+    public class Ball : MonoBehaviour, IThing
     {
-    
+        
     }
 }

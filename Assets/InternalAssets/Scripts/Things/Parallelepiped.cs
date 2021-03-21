@@ -2,7 +2,7 @@
 
 namespace InternalAssets.Scripts.Things
 {
-    public class ThingsManagment : MonoBehaviour
+    public class Parallelepiped : MonoBehaviour, IThing
     {
         
     }

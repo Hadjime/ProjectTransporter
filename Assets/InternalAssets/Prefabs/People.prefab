@@ -827,7 +827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9143720196715695826
 Transform:
   m_ObjectHideFlags: 0
@@ -857,7 +857,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6309668bf751b7c45a112aeec3c0bac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillingBarWaitTime: {fileID: 8934962056107815593}
   homePoint: {x: -4, y: 0, z: 4}
   targetPoint: {x: -1, y: 0.5, z: 1.2}
   duration: 3

@@ -16,7 +16,7 @@ namespace InternalAssets.Scripts.People.States
         {
             var homePoint = _peopleControl.HomePoint;
             var duration = _peopleControl.Duration;
-            _peopleControl.transform.DOMove(homePoint, duration, false);
+            _peopleControl.transform.DOMove(homePoint, duration, false).OnComplete(Despawn);
         }
 
         public void Update()
@@ -28,6 +28,17 @@ namespace InternalAssets.Scripts.People.States
         {
             
         }
+
+        private void Despawn()
+        {
+            _peopleControl.PoolPeoples.Despawn(_peopleControl.gameObject);
+            SetStateMoveIn();
+        }
         
+        private void SetStateMoveIn()
+        {
+            var state = _peopleControl.GetState<PeopleMoveInState>();
+            _peopleControl.PeopleFSM.ChangeState(state);
+        }
     }
 }
